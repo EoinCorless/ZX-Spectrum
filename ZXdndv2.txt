@@ -1,0 +1,83 @@
+9 LET beepPitch=-10
+10 PRINT "WELCOME TO GRUGG VERSUS THE LION"
+20 INPUT "How many games do you want?",gameNumber
+30 PRINT gameNumber
+31 LET pitchUp=21/gameNumber
+40 INPUT "Do you want constant updates? 1=Yes, 0=No",printRule
+50 LET gamesDone=0
+51 LET gruggWins=0
+52 LET lionWins=0
+60 GO SUB 5000
+70 GO SUB 6000
+80 IF turnOrder=1 THEN GO TO 1000
+90 GO SUB 7000
+95 IF lionHp<=0 THEN GO TO 4000
+100 GO SUB 8000
+105 IF gruggHp<=0 THEN GO 4500
+110 GO TO 90
+1000 LET turnOrder=0
+1010 GO TO 100
+4000 LET gruggWins=gruggWins+1
+4010 LET gamesDone=gamesDone+1
+4015 PRINT gamesDone
+4016 LET beepPitch=beepPitch+pitchUp
+4017 BEEP 0.1,beepPitch
+4020 IF gamesDone<gameNumber THEN GO SUB 5000
+4030 IF gamesDone>=gameNumber THEN GO T0 9000
+4040 RETURN
+4500 LET lionWins=lionWins+1
+4510 LET gamesDone=gamesDone+1
+4515 PRINT gamesDone
+4516 LET beepPitch=beepPitch+pitchUp
+4517 BEEP 0.1,beepPitch
+4520 IF gamesDone<gameNumber THEN GO SUB 5000
+4530 IF gamesDone>=gameNumber THEN GO T0 9000
+4540 RETURN
+5000 LET gruggHp=22
+5010 LET gruggAc=16
+5020 LET gruggStr=4
+5030 LET gruggDex=2
+5040 LET lionHp=26
+5050 LET lionAc=12
+5060 LET lionStr=3
+5069 LET lionDex=2
+5071 IF printRule=1 THEN PRINT "Game reset!"
+5080 RETURN
+6000 RANDOMIZE
+6010 LET roll1=1+INT (RND*20)+gruggDex
+6020 LET roll2=1+INT (RND*20)+lionDex
+6030 IF roll1>roll2 THEN LET turnOrder =0
+6040 IF roll1<roll2 THEN LET turnOrder = 1
+6050 IF roll1=roll2 THEN GO TO 6000
+6060 IF printRule=1 THEN PRINT "The initiative rolls were ",roll1," for Grugg and ",roll2," for the Lion."
+6070 RETURN
+7000 RANDOMIZE
+7010 LET roll=1+INT (RND*2)+gruggStr+2
+7020 IF roll>lionAc THEN LET damage=1+INT (RND*6)+1+INT (RND*6)+gruggStr
+7030 IF roll<=lionAc THEN LET damage=0
+7040 LET lionHp=lionHp-damage
+7041 IF printRule=1 THEN PRINT "Grugg dealt ",damage," damage this turn."
+7042 IF printRule=1 THEN PRINT "The Lion is left on ",lionHp" HP."
+7050 RETURN
+8000 RANDOMIZE
+8010 LET roll=1+INT (RND*20)+lionStr+2
+8011 IF printRule=1 THEN PRINT "The Lion rolled a ",roll," to hit."
+8020 IF roll>gruggAc THEN LET damage=1+INT (RND*8)+lionStr
+8030 IF roll<=gruggAc THEN LET damage=0
+8040 LET gruggHp=gruggHp-damage
+8041 IF printRule=1 THEN PRINT "The Lion dealt ",damage," damage this turn."
+8042 IF printRule=1 THEN PRINT "Grugg was left on ",gruggHp," HP"
+8050 RETURN
+9000 PRINT "---SIMULATION OVER---"
+9010 PRINT "Grugg won ",gruggWins," times"
+9020 PRINT "The Lion won ",lionWins," times"
+9028 IF gruggWins<lionWins THEN PRINT "The Lion is the winner"
+9029 IF gruggWins>lionWins THEN PRINT "Grugg the Caveman is the winner"
+9030 IF gruggWins=lionWins THEN PRINT "It was a tie"
+9200 BEEP 0.2,7
+9300 BEEP 0.2,4
+9400 BEEP 0.2,8
+9500 BEEP 0.1,5
+9600 BEEP 0.6,8.5
+
+
